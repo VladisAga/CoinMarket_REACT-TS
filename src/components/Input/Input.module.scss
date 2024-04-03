@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+
+.input {
+    border-radius: 10px;
+    font-weight: 400;
+    font-size: 17px;
+    font-family: $font;
+    color: $text-color;
+    line-height: 1.2;
+    padding: 21px 20px;
+    width: 100%;
+    border: 1px solid rgb(238, 238, 238);
+    outline: none;
+}
+
+.input::placeholder {
+    color: rgb(196, 196, 196);
+}
