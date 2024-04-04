@@ -7,12 +7,16 @@
     font-family: $font;
     color: $text-color;
     line-height: 1.2;
-    padding: 21px 20px;
-    width: 100%;
-    border: 1px solid rgb(238, 238, 238);
+    padding: 10px;
+    border: none;
     outline: none;
+    background-color: transparent;
+}
+
+.input::before {
+    content: '/images/loupe.png';
 }
 
 .input::placeholder {
-    color: rgb(196, 196, 196);
+    color: rgb(66, 118, 231);
 }

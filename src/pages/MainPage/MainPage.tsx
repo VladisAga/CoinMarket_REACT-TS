@@ -6,6 +6,8 @@ import TableRow from '../../components/TableRow/TableRow';
 import { useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import { CoinDataMap } from '../CoinPage/coinPage.props';
+import SortingSection from '../../components/SortingSection/SortingSection';
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
     const [getCoinData, { isLoading }] = useLazyGetCoinsQuery();
@@ -14,25 +16,29 @@ const MainPage = () => {
     const [coinDataFotImg, setCoinDataFotImg] = useState<CoinDataMap>();
     const [paginationPage, setPaginationPage] = useState(1);
     const [limit, setLimit] = useState(100);
+    const [triger, setTriger] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    const getCoin = (limit: number) => {
-        getCoinData(limit).unwrap()
+    const getCoin = () => {
+        getCoinData(null).unwrap()
             .then((data) => {
-                const last100Coins = data.data.slice(-100);
-                setData(last100Coins);
+                const sortedData = data.data.filter((value: ICoin) => +value.priceUsd > 0 && +value.marketCapUsd > 0);
+                setData(sortedData);
+                setTriger(true);
+                localStorage.setItem('coinsData', JSON.stringify(sortedData));
             })
             .catch((error) => console.error(error))
     };
 
     useEffect(() => {
-        getCoin(limit);
-    }, [limit]);
+        getCoin();
+    }, []);
 
     useEffect(() => {
-        const symbolArr = data && data.map((value) => value.symbol);
+        const symbolArr = data && data.map((value) => value.symbol).slice(0, 549);
         const symbolString = symbolArr?.join(',');
         setDataForImg(symbolString);
-    }, [data]);
+    }, [triger]);
 
     useEffect(() => {
         if (dataForImg) {
@@ -54,7 +60,7 @@ const MainPage = () => {
 
     return (
         <div className={styles.mainArea}>
-            <section className={styles.sortingSection}></section>
+            <SortingSection tableData={data!} setTableData={setData} />
             <table className={styles.table}>
                 <thead>
                     <tr>
@@ -67,17 +73,18 @@ const MainPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.map((value: ICoin, index: number) => (
+                    {data && data.map((value: ICoin) => (
                         <TableRow
                             key={value.rank}
-                            id={index + limit - 100}
+                            id={limit - 100}
                             imgSrc={coinDataFotImg && coinDataFotImg[value.symbol] && coinDataFotImg[value.symbol][0].logo ? coinDataFotImg[value.symbol][0].logo : ''}
                             value={value}
+                            tableData={data}
                         />
-                    ))}
+                    )).slice(limit - 100, limit)}
                 </tbody>
             </table>
-            <Pagination page={paginationPage} limit={limit} setPage={setPaginationPage} setLimit={setLimit}/>
+            <Pagination page={paginationPage} dataLength={data!?.length} limit={limit} setPage={setPaginationPage} setLimit={setLimit} />
         </div>
     );
 };
