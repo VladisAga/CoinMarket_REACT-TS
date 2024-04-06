@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import { CoinDataMap } from '../CoinPage/coinPage.props';
 import SortingSection from '../../components/SortingSection/SortingSection';
-import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
     const [getCoinData, { isLoading }] = useLazyGetCoinsQuery();
@@ -17,7 +16,6 @@ const MainPage = () => {
     const [paginationPage, setPaginationPage] = useState(1);
     const [limit, setLimit] = useState(100);
     const [triger, setTriger] = useState<boolean>(false);
-    const navigate = useNavigate();
 
     const getCoin = () => {
         getCoinData(null).unwrap()
@@ -35,7 +33,7 @@ const MainPage = () => {
     }, []);
 
     useEffect(() => {
-        const symbolArr = data && data.map((value) => value.symbol).slice(0, 549);
+        const symbolArr = data && data.map((value) => value.symbol).slice(0, 420);
         const symbolString = symbolArr?.join(',');
         setDataForImg(symbolString);
     }, [triger]);
@@ -77,7 +75,8 @@ const MainPage = () => {
                         <TableRow
                             key={value.rank}
                             id={limit - 100}
-                            imgSrc={coinDataFotImg && coinDataFotImg[value.symbol] && coinDataFotImg[value.symbol][0].logo ? coinDataFotImg[value.symbol][0].logo : ''}
+                            imgSrc={coinDataFotImg && coinDataFotImg[value.symbol] && coinDataFotImg[value.symbol][0].logo
+                                ? coinDataFotImg[value.symbol][0].logo : ''}
                             value={value}
                             tableData={data}
                         />

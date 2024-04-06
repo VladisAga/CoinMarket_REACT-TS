@@ -10,4 +10,12 @@ export interface ICoin {
     priceUsd: string;
     changePercent24Hr: string;
     vwap24Hr: string;
+    imgId?: string
+}
+
+export interface ICryptoData {
+    circulatingSupply: string;
+    date: string;
+    priceUsd: string;
+    time: number;
 }

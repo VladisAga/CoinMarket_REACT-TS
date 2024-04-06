@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+ interface IgetCoinCandle {
+    interval: string;
+    coin: string;
+ }
+
 export const coinApi = createApi({
     reducerPath: 'coinApi',
     baseQuery: fetchBaseQuery({
@@ -16,8 +21,8 @@ export const coinApi = createApi({
             }),
         }),
         getCoinCandle: build.query({
-            query: ({interval, coin}) => ({
-                url: `candles?interval=${interval}&baseId=${coin}`,
+            query: ({coin, interval}: IgetCoinCandle) => ({
+                url: `assets/${coin}/history?interval=${interval}`,
                 method: 'GET',
                 redirect: 'follow',
                 credentials: 'same-origin',

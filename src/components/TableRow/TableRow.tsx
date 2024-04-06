@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
     const rowRef = useRef<HTMLTableRowElement>(null);
-    const [rowIndex, setRowIndex] = useState<number>(-1);  
-    const navigate = useNavigate();  
+    const [rowIndex, setRowIndex] = useState<number>(-1);
+    const navigate = useNavigate();
     const { symbol, priceUsd, marketCapUsd, changePercent24Hr } = value;
     const toDollar = new Intl.NumberFormat('en', {
         style: 'currency',
@@ -17,17 +17,18 @@ const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
 
     useEffect(() => {
         if (rowRef.current) {
-            const table = rowRef.current.closest('table'); 
+            const table = rowRef.current.closest('table');
             if (table) {
-                const rows = table.getElementsByTagName('tr'); 
-                const index = Array.from(rows).indexOf(rowRef.current); 
+                const rows = table.getElementsByTagName('tr');
+                const index = Array.from(rows).indexOf(rowRef.current);
                 setRowIndex(index);
             }
         }
     }, [marketCapUsd, priceUsd, tableData]);
 
     const goToCoinPage = () => {
-        navigate('/coinPage');
+        localStorage.setItem('coinImg', imgSrc);
+        navigate(`/coinPage/${encodeURIComponent(JSON.stringify( value ))}`, { replace: true });
     };
 
     return (

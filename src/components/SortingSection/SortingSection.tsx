@@ -20,9 +20,9 @@ const SortingSection: React.FC<ISortingSection> = ({ setTableData, tableData }) 
             if (Array.isArray(tableData)) {
                 const sortedData = [...tableData];
                 if (keyWord === 'ascending') {
-                    sortedData.sort((a, b) => +a[obgKey] - +b[obgKey]);
+                    sortedData.sort((a, b) => +a[obgKey]! - +b[obgKey]!);
                 } else if (keyWord === 'descending') {
-                    sortedData.sort((a, b) => +b[obgKey] - +a[obgKey]);
+                    sortedData.sort((a, b) => +b[obgKey]! - +a[obgKey]!);
                 }
                 setTableData(sortedData);
             }

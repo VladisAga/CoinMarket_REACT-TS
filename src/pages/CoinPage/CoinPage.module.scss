@@ -1,0 +1,109 @@
+@import '../../styles/variables.scss';
+
+.coinSection {
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
+    height: 100svh;
+    gap: 20px;
+}
+
+.textInf {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 35px;
+    min-width: 190px;
+
+    p {
+        font-size: 20px;
+    }
+}
+
+.imgAndName {
+    display: flex;
+    align-items: center;
+
+    .imgBox {
+        max-width: 50px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    p {
+        font-size: 26px;
+        font-weight: 600;
+        padding-left: 10px;
+
+        span {
+            font-weight: 400;
+            color: $text-secondarry-color
+        }
+    }
+}
+
+.topicName {
+    font-weight: 600;
+}
+
+.topics {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.selectSection {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    gap: 5px;
+
+    select {
+        margin-left: auto;
+        width: 70%;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        background-color: rgb(251, 244, 237);
+        color: rgb(66, 118, 231);
+        font-weight: 600;
+        padding: 3px 0;
+    }
+}
+
+.graphic {
+    width: 75%;
+}
+
+.homeBtn {
+    margin-right: auto;
+    padding: 8px 25px;
+}
+
+@media all and (max-width: 820px) {
+    .coinSection {
+        flex-wrap: wrap;
+    }
+
+    .imgAndName {
+        justify-content: center;
+    }
+
+    .textInf {
+        height: 20vh;
+    }
+
+    .graphic {
+        width: 100%;
+
+        height: 73vh;
+    }
+
+    .topics {
+        flex-direction: row;
+        justify-content: center;
+    }
+}

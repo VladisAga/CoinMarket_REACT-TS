@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <MainPage />
       },
       {
-        path: '/coinPage',
+        path: '/coinPage/:inf',
         element: <CoinPage />
       }
     ]
