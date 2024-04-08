@@ -10,7 +10,8 @@ export interface ICoin {
     priceUsd: string;
     changePercent24Hr: string;
     vwap24Hr: string;
-    imgId?: string
+    coinAmount?: string | number;
+    coinImg: string
 }
 
 export interface ICryptoData {

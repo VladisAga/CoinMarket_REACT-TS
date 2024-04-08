@@ -23,20 +23,28 @@ ChartJS.register(
     Filler
 );
 
-const CandlestickChart: React.FC<ICandlestickChart> = ({ graphicData }) => {
+const CandlestickChart: React.FC<ICandlestickChart> = ({ graphicData, timePeriod }) => {
     const priceMap = () => {
         if (graphicData) {
             return graphicData.map((value) => value.priceUsd);
         }
     };
 
-    const labelsMap = () => {
+    const labelsMap = (timePeriod: string) => {
         if (graphicData) {
             return graphicData.map((value) => {
                 const date = new Date(value.date);
-                const hour = date.getHours() % 12 || 12;
-                const meridiem = date.getHours() < 12 ? 'AM' : 'PM';
-                return hour + meridiem;
+                let label = '';
+                if (timePeriod === '1d' || timePeriod === '12h') {
+                    const hour = date.getHours();
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    label = hour + `:${minutes}`;
+                } else if (timePeriod === '1h') {
+                    const hours = date.getHours();
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    label = `${hours}:${minutes}`;
+                }
+                return label;
             });
         }
     };
@@ -70,7 +78,7 @@ const CandlestickChart: React.FC<ICandlestickChart> = ({ graphicData }) => {
                         if (+value >= 1000) {
                             return '$' + +value / 1000 + 'k';
                         }
-                        return '$' + value;
+                        return '$' + (+value).toFixed(2);
                     },
                     color: 'black',
                     font: {
@@ -89,7 +97,7 @@ const CandlestickChart: React.FC<ICandlestickChart> = ({ graphicData }) => {
         }
     }
     } data={{
-        labels: labelsMap(),
+        labels: labelsMap(timePeriod),
         datasets: [
             {
                 label: '',
@@ -98,7 +106,6 @@ const CandlestickChart: React.FC<ICandlestickChart> = ({ graphicData }) => {
                 fill: {
                     target: 'origin',
                     above: chooseColor(),
-
                 }
             },
         ],

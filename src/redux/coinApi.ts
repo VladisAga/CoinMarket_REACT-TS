@@ -20,6 +20,14 @@ export const coinApi = createApi({
                 credentials: 'same-origin',
             }),
         }),
+        getCoinsPrice: build.query({
+            query: (coins) => ({
+                url: `assets?ids=${coins}`,
+                method: 'GET',
+                redirect: 'follow',
+                credentials: 'same-origin',
+            }),
+        }),
         getCoinCandle: build.query({
             query: ({coin, interval}: IgetCoinCandle) => ({
                 url: `assets/${coin}/history?interval=${interval}`,
@@ -33,4 +41,4 @@ export const coinApi = createApi({
 
 });
 
-export const { useLazyGetCoinsQuery, useLazyGetCoinCandleQuery } = coinApi;
+export const { useLazyGetCoinsQuery, useLazyGetCoinCandleQuery, useLazyGetCoinsPriceQuery } = coinApi;

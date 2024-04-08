@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom";
-import styles from './Header.module.scss';
+import styles from './HeaderAndMain.module.scss';
+import Header from "../../components/Header/Header";
 
 const Layout = () => {
     return (
         <div className={styles.generalArea}>
-            <section>
-
-            </section>
+            <Header />
             <section className={styles.mainArea}>
                 <Outlet />
             </section>

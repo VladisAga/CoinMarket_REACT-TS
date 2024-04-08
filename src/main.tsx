@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { store } from './redux/configure-store.ts';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import CoinPage from './pages/CoinPage/CoinPage.tsx';
-import Layout from './Layout/Header/Header.tsx';
+import Layout from './Layout/HeaderAndMain/HeaderAndMain.tsx';
 import Error from './pages/Error/Error.tsx';
 
 const router = createBrowserRouter([

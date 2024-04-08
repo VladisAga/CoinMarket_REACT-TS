@@ -1,0 +1,26 @@
+.header {
+    padding: 20px;
+    background-color: rgb(255, 237, 220);
+    display: flex;
+    justify-content: space-between;
+}
+
+.coins {
+    display: flex;
+    gap: 20px;
+
+    p {
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
+
+.top3 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    h3 {
+        font-size: 22px;
+    }
+}

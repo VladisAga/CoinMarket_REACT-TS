@@ -1,0 +1,75 @@
+@import '../../../styles/variables.scss';
+
+body {
+    :global {
+        .ant-modal {
+            min-width: 520px;
+        }
+
+        .ant-modal-footer {
+            display: none;
+        }
+    }
+}
+
+.modalHead {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+
+    div {
+        width: 50px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    h3 {
+        font-size: 24px;
+
+        span {
+            color: $text-secondarry-color;
+            font-weight: 400;
+        }
+    }
+}
+
+.main {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+
+    p {
+        font-weight: 500;
+        font-size: 18px;
+
+        span {
+            font-weight: 400;
+        }
+    }
+
+    input {
+        background-color: #efefef;
+        text-align: center;
+    }
+
+    input::placeholder {
+        text-align: center;
+    }
+}
+
+.footer {
+    padding-top: 20px;
+
+    .buyBtn {
+        display: block;
+        margin: 0 auto;
+        background-color: rgb(66, 118, 231);
+        font-size: 20px;
+        padding: 5px 20px;
+    }
+}

@@ -5,56 +5,22 @@ import { ICoin } from "../../types/types";
 import styles from './CoinPage.module.scss';
 import CandlestickChart from "../../components/CandlestickChart/CandlestickChart";
 import Button from "../../components/Button/Button";
-
-const formatNumber = (num: number): string => {
-    if (num >= 1000000000) {
-        return (num / 1000000000).toFixed(2) + 'B';
-    } else if (num >= 1000000) {
-        return (num / 1000000).toFixed(2) + 'M';
-    } else if (num >= 1000) {
-        return (num / 1000).toFixed(2) + 'K';
-    } else {
-        return num.toString();
-    }
-};
-
-interface IInterval {
-    interval: string;
-    dataPoints: number;
-}
-
-interface IintervalInf {
-    '1d'?: IInterval;
-    '12h'?: IInterval;
-    '1h'?: IInterval;
-}
-
-const intervalInf = {
-    '1d': {
-        interval: 'h1',
-        dataPoints: 24
-    },
-    '12h': {
-        interval: 'm30',
-        dataPoints: 24
-    },
-    '1h': {
-        interval: 'm1',
-        dataPoints: 60
-    },
-}
+import { toDollar } from '../../functional/moneyConvertor';
+import ModalBuyCoins from "../../components/modal/ModalBuyCoins/ModalBuyCoins";
+import { formatNumber } from "../../functional/formatNumber";
+import { IintervalInf } from "./coinPage.props";
+import { intervalInf } from "./coinInf";
+import cn from 'classnames';
 
 const CoinPage = () => {
     const navigate = useNavigate();
     const [getCandleData, { isLoading }] = useLazyGetCoinCandleQuery();
     const [data, setData] = useState<ICoin>();
-    const [imgSrc, setImgSrc] = useState<string>();
+    const [imgSrc, setImgSrc] = useState<string>('');
     const [graphicData, setGraphicData] = useState();
-    const [selectValue, setSelectValue] = useState<string>('1d'); const { inf } = useParams();
-    const toDollar = new Intl.NumberFormat('en', {
-        style: 'currency',
-        currency: 'USD',
-    });
+    const [selectValue, setSelectValue] = useState<string>('1d');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { inf } = useParams();
 
     useEffect(() => {
         if (inf) {
@@ -85,9 +51,12 @@ const CoinPage = () => {
         setSelectValue(selectedOption);
     };
 
-
     const toHome = () => {
         navigate('/', { replace: true });
+    };
+
+    const showModal = () => {
+        setIsModalOpen(true);
     };
 
     return (
@@ -97,10 +66,12 @@ const CoinPage = () => {
                     <>
                         <div className={styles.textInf}>
                             <div className={styles.imgAndName}>
-                                <div className={styles.imgBox}>
-                                    <img src={imgSrc ? imgSrc : '/images/coinDefault.png'} alt={data.id} />
+                                <div className={styles.logoBox}>
+                                    <div >
+                                        <img src={imgSrc ? imgSrc : '/images/coinDefault.png'} alt={data.id} />
+                                    </div>
+                                    <p>{data.name} <span>{data.symbol}</span></p>
                                 </div>
-                                <p>{data.name} <span>{data.symbol}</span></p>
                                 <section className={styles.selectSection}>
                                     <label htmlFor="select">Time interval</label>
                                     <select id="select" value={selectValue} onChange={handleChange}>
@@ -117,17 +88,20 @@ const CoinPage = () => {
                                 <p><span className={styles.topicName}>Supply:</span> ${formatNumber(+data!.supply)}</p>
                                 {+data!.maxSupply !== 0
                                     ? <p><span className={styles.topicName}>Max supply:</span> ${formatNumber(+data!.maxSupply)}</p>
-                                    : <p><span className={styles.topicName}>Max supply:</span><span>&#8734;</span> </p>}
-                                <Button className={styles.homeBtn} onClick={toHome}>TO MAIN</Button>
+                                    : <p className={styles.pWintInf}><span className={styles.topicName}>Max supply:</span><span className={styles.infinity}>&infin;</span> </p>}
+                                <div className={styles.btnBox}>
+                                    <Button className={styles.Btn} onClick={toHome}>TO MAIN</Button>
+                                    <Button className={cn(styles.Btn, styles.buyBtn)} onClick={showModal}>BUY</Button>
+                                </div>
                             </div>
                         </div>
                         <div className={styles.graphic}>
-                            <CandlestickChart graphicData={graphicData!} coinName={data.id} />
+                            <CandlestickChart graphicData={graphicData!} timePeriod={selectValue} />
                         </div>
                     </>
                 )}
             </section>
-
+            {data && <ModalBuyCoins setIsOpen={setIsModalOpen} coinInf={data} img={imgSrc} isOpen={isModalOpen} />}
         </>
     );
 };

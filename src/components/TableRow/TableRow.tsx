@@ -4,16 +4,15 @@ import styles from './TableRow.module.scss';
 import { ITableRow } from './TableRow.props';
 import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
+import ModalBuyCoins from '../modal/ModalBuyCoins/ModalBuyCoins';
+import { toDollar } from '../../functional/moneyConvertor';
 
 const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
     const rowRef = useRef<HTMLTableRowElement>(null);
     const [rowIndex, setRowIndex] = useState<number>(-1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const { symbol, priceUsd, marketCapUsd, changePercent24Hr } = value;
-    const toDollar = new Intl.NumberFormat('en', {
-        style: 'currency',
-        currency: 'USD',
-    });
 
     useEffect(() => {
         if (rowRef.current) {
@@ -28,12 +27,17 @@ const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
 
     const goToCoinPage = () => {
         localStorage.setItem('coinImg', imgSrc);
-        navigate(`/coinPage/${encodeURIComponent(JSON.stringify( value ))}`, { replace: true });
+        navigate(`/coinPage/${encodeURIComponent(JSON.stringify(value))}`, { replace: true });
+    };
+
+    const showModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        setIsModalOpen(true);
     };
 
     return (
         <>
-            {<tr ref={rowRef} className={styles.row} onClick={goToCoinPage}>
+            <tr ref={rowRef} className={styles.row} onClick={goToCoinPage}>
                 <td className={styles.firstTd}>{id + rowIndex}</td>
                 <td className={styles.secondTd}>
                     <img src={imgSrc ? imgSrc : '/images/coinDefault.png'} alt='coin' />
@@ -44,8 +48,9 @@ const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
                 <td className={cn(styles.fifthTd, styles.plus, {
                     [styles.minus]: +changePercent24Hr < 0
                 })}>{Math.abs(+changePercent24Hr) > 0.01 ? Math.abs(+changePercent24Hr).toFixed(2) + '%' : Math.abs(+changePercent24Hr).toFixed(4) + '%'}</td>
-                <td className={styles.sixthTd}><Button className={styles.buyCoinBtn}>Buy coin</Button></td>
-            </tr>}
+                <td className={styles.sixthTd}><Button className={styles.buyCoinBtn} onClick={showModal}>Buy coin</Button></td>
+            </tr>
+            <ModalBuyCoins setIsOpen={setIsModalOpen} coinInf={value} img={imgSrc} isOpen={isModalOpen} />
         </>
     )
 }
