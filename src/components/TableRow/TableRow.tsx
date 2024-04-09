@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import ModalBuyCoins from '../modal/ModalBuyCoins/ModalBuyCoins';
 import { toDollar } from '../../functional/moneyConvertor';
+import { formatNumber } from '../../functional/formatNumber';
 
 const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
     const rowRef = useRef<HTMLTableRowElement>(null);
@@ -44,7 +45,7 @@ const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
                     {symbol}
                 </td>
                 <td className={styles.thirdTd}>{+priceUsd > 0.01 ? toDollar.format(+priceUsd) : '$' + parseFloat(priceUsd).toFixed(8)}</td>
-                <td className={styles.fourthTd}>{toDollar.format(+marketCapUsd)}</td>
+                <td className={styles.fourthTd}>${formatNumber(+marketCapUsd)}</td>
                 <td className={cn(styles.fifthTd, styles.plus, {
                     [styles.minus]: +changePercent24Hr < 0
                 })}>{Math.abs(+changePercent24Hr) > 0.01 ? Math.abs(+changePercent24Hr).toFixed(2) + '%' : Math.abs(+changePercent24Hr).toFixed(4) + '%'}</td>

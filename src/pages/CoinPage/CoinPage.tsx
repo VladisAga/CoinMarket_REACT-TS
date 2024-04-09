@@ -11,6 +11,9 @@ import { formatNumber } from "../../functional/formatNumber";
 import { IintervalInf } from "./coinPage.props";
 import { intervalInf } from "./coinInf";
 import cn from 'classnames';
+import { useDispatch } from "react-redux";
+import { setStateOfLoadTrue, setStateOfLoadFalse } from "../../redux/isLoadingSlice";
+import ErrorModal from "../../components/modal/ErrorModal/ErrorModal";
 
 const CoinPage = () => {
     const navigate = useNavigate();
@@ -19,8 +22,10 @@ const CoinPage = () => {
     const [imgSrc, setImgSrc] = useState<string>('');
     const [graphicData, setGraphicData] = useState();
     const [selectValue, setSelectValue] = useState<string>('1d');
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isErrorModalOPen, setIsErrorModalOpen] = useState<boolean>(false);
     const { inf } = useParams();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (inf) {
@@ -38,7 +43,7 @@ const CoinPage = () => {
                 .then((data) => {
                     setGraphicData(data.data.slice(-dataPoints));
                 })
-                .catch((error) => console.error(error));
+                .catch(() => setIsErrorModalOpen(true));
         }
     }
 
@@ -58,6 +63,13 @@ const CoinPage = () => {
     const showModal = () => {
         setIsModalOpen(true);
     };
+
+    useEffect(() => {
+        if (isLoading) {
+            dispatch(setStateOfLoadTrue());
+        }
+        return () => { dispatch(setStateOfLoadFalse()); }
+    }, [isLoading, dispatch, getGraphicInf]);
 
     return (
         <>
@@ -102,6 +114,7 @@ const CoinPage = () => {
                 )}
             </section>
             {data && <ModalBuyCoins setIsOpen={setIsModalOpen} coinInf={data} img={imgSrc} isOpen={isModalOpen} />}
+            <ErrorModal setIsOpen={setIsErrorModalOpen} isOpen={isErrorModalOPen} />
         </>
     );
 };

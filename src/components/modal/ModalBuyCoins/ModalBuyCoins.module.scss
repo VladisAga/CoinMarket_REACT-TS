@@ -42,6 +42,7 @@ body {
     flex-direction: column;
     gap: 10px;
     text-align: center;
+    position: relative;
 
     p {
         font-weight: 500;
@@ -72,4 +73,20 @@ body {
         font-size: 20px;
         padding: 5px 20px;
     }
+}
+
+.warningText {
+    position: absolute;
+    width: 100%;
+    top: 125px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
 }

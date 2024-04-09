@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 import styles from './Header.module.scss';
 import { ICoin } from "../../types/types";
 import { toDollar } from '../../functional/moneyConvertor';
 import Button from "../Button/Button";
 import ModalWallet from "../modal/ModalWallet/ModalWallet";
+import { useLazyGetCoinsQuery } from "../../redux/coinApi";
 import { useLazyGetCoinsPriceQuery } from "../../redux/coinApi";
-import { formatter } from "../../functional/moneyConvertor";
+import { stateOfBuying } from "../../redux/isBought";
 
-const Header = () => {
+const Header = ({ }) => {
     const [top3, setTop3] = useState<ICoin[]>();
     const [updatedCoinData, setUpdatedCoinData] = useState<ICoin[]>();
     const [oldWaletInf, setOldWalletInf] = useState<ICoin[]>();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [getCoinsPrice, { isLoading }] = useLazyGetCoinsPriceQuery();
+    const [getCoinsPrice] = useLazyGetCoinsPriceQuery();
+    const [getTop3Coins] = useLazyGetCoinsQuery();
     const [triger, setTriger] = useState<boolean>(false);
     const [oldPrice, setOldPrice] = useState<number>(0);
     const [newPrice, setNewPrice] = useState<number>(0);
+    const isBuying = useSelector(stateOfBuying);
+
 
     useEffect(() => {
         const wallet = localStorage.getItem('wallet');
@@ -33,7 +38,7 @@ const Header = () => {
                 })
                 .catch(console.error)
         }
-    }, []);
+    }, [isModalOpen, isBuying]);
 
     useEffect(() => {
         if (updatedCoinData) {
@@ -46,11 +51,9 @@ const Header = () => {
     }, [triger]);
 
     useEffect(() => {
-        const allCoins = localStorage.getItem('coinsData');
-        if (allCoins) {
-            const coins = JSON.parse(allCoins);
-            setTop3(coins.slice(0, 3));
-        }
+        getTop3Coins(3).unwrap()
+            .then((data) => { setTop3(data.data) })
+            .catch(console.error)
     }, []);
 
     const showModal = () => {
@@ -61,12 +64,21 @@ const Header = () => {
         const number = newPrice - oldPrice;
         const percentageChange = ((newPrice - oldPrice) / oldPrice) * 100;
         const formattedNumber = Math.abs(number).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const formattedPercentageChange = percentageChange.toFixed(2) + '%';
+        let formattedPercentageChange = percentageChange.toFixed(2) + '%';
+        if (isNaN(+percentageChange.toFixed(2))) formattedPercentageChange = '0%';
         const formattedNewPrice = toDollar.format(newPrice);
         const sign = number >= 0 ? '+' : '-';
-        return `${formattedNewPrice} ${sign} ${formattedNumber} (${formattedPercentageChange})`;
+        return (
+            <>
+                {formattedNewPrice} {sign} {formattedNumber}
+                <span style={sign === '+'
+                    ? { color: 'rgb(59, 173, 59)' }
+                    : { color: 'red' }}>({formattedPercentageChange})
+                </span>
+            </>
+        );
     };
-    
+
     return (
         <>
             <header className={styles.header}>
@@ -79,8 +91,7 @@ const Header = () => {
                     </div>
                 </section>
                 <section>
-                    {moneyInWallet()}
-                    <Button onClick={showModal}>Open wallet</Button>
+                    <Button className={styles.walletPrice} onClick={showModal}>{moneyInWallet()}</Button>
                 </section>
             </header>
             <ModalWallet isOpen={isModalOpen} setIsOpen={setIsModalOpen} />

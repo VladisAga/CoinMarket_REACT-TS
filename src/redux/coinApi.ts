@@ -13,8 +13,8 @@ export const coinApi = createApi({
     }),
     endpoints: (build) => ({
         getCoins: build.query({
-            query: () => ({
-                url: `assets?limit=900`,
+            query: (number) => ({
+                url: `assets?limit=${number}`,
                 method: 'GET',
                 redirect: 'follow',
                 credentials: 'same-origin',

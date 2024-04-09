@@ -1,24 +1,26 @@
 import { useLazyGetCoinsQuery } from '../../redux/coinApi';
 import styles from './MainPage.module.scss';
-import cn from 'classnames';
 import { ICoin } from '../../types/types';
 import TableRow from '../../components/TableRow/TableRow';
 import { useEffect, useState } from 'react';
 import Pagination from '../../components/Pagination/Pagination';
 import { CoinDataMap } from '../CoinPage/coinPage.props';
 import SortingSection from '../../components/SortingSection/SortingSection';
+import { useDispatch } from 'react-redux';
+import { setStateOfLoadTrue, setStateOfLoadFalse } from '../../redux/isLoadingSlice';
 
 const MainPage = () => {
-    const [getCoinData, { isLoading }] = useLazyGetCoinsQuery();
+    const [getCoinData] = useLazyGetCoinsQuery();
     const [data, setData] = useState<ICoin[]>();
     const [dataForImg, setDataForImg] = useState<string>();
     const [coinDataFotImg, setCoinDataFotImg] = useState<CoinDataMap>();
     const [paginationPage, setPaginationPage] = useState(1);
     const [limit, setLimit] = useState(100);
     const [triger, setTriger] = useState<boolean>(false);
+    const dispatch = useDispatch();
 
     const getCoin = () => {
-        getCoinData(null).unwrap()
+        getCoinData(900).unwrap()
             .then((data) => {
                 const sortedData = data.data.filter((value: ICoin) => +value.priceUsd > 0 && +value.marketCapUsd > 0);
                 setData(sortedData);
@@ -40,11 +42,15 @@ const MainPage = () => {
 
     useEffect(() => {
         if (dataForImg) {
+            dispatch(setStateOfLoadTrue());
             fetchCoinData(dataForImg)
                 .then(data => {
                     setCoinDataFotImg(data.data as CoinDataMap);
                 })
-                .catch(error => console.error('Error fetching data:', error));
+                .catch(error => console.error('Error fetching data:', error))
+                .finally(() => {
+                    dispatch(setStateOfLoadFalse()); 
+                });
         }
     }, [dataForImg]);
 
@@ -67,7 +73,7 @@ const MainPage = () => {
                         <th className={styles.thirdTh}>Price</th>
                         <th className={styles.fourthTh}>Market Cap</th>
                         <th className={styles.fifthTh}>24h %</th>
-                        <th className={styles.sixthTh}>ADD</th>
+                        <th className={styles.sixthTh}>PURCHASE</th>
                     </tr>
                 </thead>
                 <tbody>
