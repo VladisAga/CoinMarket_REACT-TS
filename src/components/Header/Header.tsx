@@ -9,7 +9,7 @@ import { useLazyGetCoinsQuery } from "../../redux/coinApi";
 import { useLazyGetCoinsPriceQuery } from "../../redux/coinApi";
 import { stateOfBuying } from "../../redux/isBought";
 
-const Header = ({ }) => {
+const Header = () => {
     const [top3, setTop3] = useState<ICoin[]>();
     const [updatedCoinData, setUpdatedCoinData] = useState<ICoin[]>();
     const [oldWaletInf, setOldWalletInf] = useState<ICoin[]>();
@@ -20,7 +20,6 @@ const Header = ({ }) => {
     const [oldPrice, setOldPrice] = useState<number>(0);
     const [newPrice, setNewPrice] = useState<number>(0);
     const isBuying = useSelector(stateOfBuying);
-
 
     useEffect(() => {
         const wallet = localStorage.getItem('wallet');

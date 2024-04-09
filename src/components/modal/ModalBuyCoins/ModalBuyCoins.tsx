@@ -2,7 +2,7 @@ import { Modal } from 'antd';
 import { IModalBuyCoins } from './ModalBuyCoins.props';
 import { toDollar } from '../../../functional/moneyConvertor';
 import Input from '../../Input/Input';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ModalBuyCoins.module.scss';
 import Button from '../../Button/Button';
 import { ICoin } from '../../../types/types';
@@ -83,7 +83,7 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf, i
 
     return (
         <>
-            <Modal centered open={isOpen} onCancel={handleCancel}>
+            <Modal centered open={isOpen} onCancel={handleCancel} maskClosable={false}>
                 <header className={styles.modalHead}>
                     <div>
                         <img src={img ? img : '/images/coinDefault.png'} alt={symbol} />

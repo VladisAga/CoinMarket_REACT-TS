@@ -7,8 +7,7 @@ import Loader from '../../components/Loader/Loader';
 
 const Layout = () => {
     const isLoading = useSelector(stateOfLoading);
-    console.log(isLoading);
-
+    
     return (
         <div className={styles.generalArea}>
             <Loader isLoading={isLoading} />
