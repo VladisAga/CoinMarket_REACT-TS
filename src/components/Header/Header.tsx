@@ -85,12 +85,12 @@ const Header = () => {
                     <h3>TOP 3 COINS</h3>
                     <div className={styles.coins}>
                         {top3 && top3.map((value, id) =>
-                            <p key={id}>{value.rank + '.'} {value.symbol}: {toDollar.format(+value.priceUsd)}</p>)
+                            <p id="topCoins" key={id}>{value.rank + '.'} {value.symbol}: {toDollar.format(+value.priceUsd)}</p>)
                         }
                     </div>
                 </section>
                 <section>
-                    <Button className={styles.walletPrice} onClick={showModal}>{moneyInWallet()}</Button>
+                    <Button className={styles.walletPrice} id="openWalletBtn" onClick={showModal}>{moneyInWallet()}</Button>
                 </section>
             </header>
             <ModalWallet isOpen={isModalOpen} setIsOpen={setIsModalOpen} />

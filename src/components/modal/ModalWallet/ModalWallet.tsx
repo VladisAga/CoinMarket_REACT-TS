@@ -35,7 +35,7 @@ const ModalWallet: React.FC<IModalWallet> = ({ isOpen, setIsOpen }) => {
                         <ol className={styles.list}>
                             {coinInf.map((value, id) => (
                                 <li key={id} className={styles.listElem}>
-                                    <CoinInWallet coin={value} id={id} triger={triger} setTriger={setTriger}/>
+                                    <CoinInWallet coin={value} id={id} triger={triger} setTriger={setTriger} />
                                 </li>
                             ))}
                         </ol>

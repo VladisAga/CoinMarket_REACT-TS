@@ -12,6 +12,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@playwright/test": "^1.43.0",
     "@reduxjs/toolkit": "^2.2.3",
     "antd": "^5.16.0",
     "axios": "^1.6.8",

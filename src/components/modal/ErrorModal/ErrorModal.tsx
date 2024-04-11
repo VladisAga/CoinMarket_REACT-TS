@@ -16,7 +16,7 @@ const ErrorModal: React.FC<IModalError> = ({ isOpen, setIsOpen }) => {
     };
 
     return (
-            <Modal centered open={isOpen} onCancel={handleCancel} closeIcon={false} maskClosable={false}>
+            <Modal data-test-id='errorModal' centered open={isOpen} onCancel={handleCancel} closeIcon={false} maskClosable={false}>
                 <section className={styles.wrongSection}>
                     <p>SOMETHING WENT WRONG &#128577;</p>
                     <p>GO HOME AND TRY AGAIN</p>

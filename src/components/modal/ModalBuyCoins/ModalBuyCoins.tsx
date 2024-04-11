@@ -10,7 +10,7 @@ import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { setStateOfBoughtTrue, setStateOfBoughtFalse } from '../../../redux/isBought';
 
-const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf, img }) => {
+const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf }) => {
     const [value, setValue] = useState<string>('');
     const { priceUsd, name, symbol } = coinInf;
     const [purchasePrice, setPurchasePrice] = useState<number>(0);
@@ -58,7 +58,6 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf, i
                 if (!foundCoin) {
                     updatedWalletInf.push({
                         ...coinInf,
-                        coinImg: img,
                         coinAmount: value
                     });
                 }
@@ -66,7 +65,6 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf, i
             } else {
                 const firstPurchase = [{
                     ...coinInf,
-                    coinImg: img,
                     coinAmount: value
                 }];
                 localStorage.setItem('wallet', JSON.stringify(firstPurchase));
@@ -83,24 +81,27 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf, i
 
     return (
         <>
-            <Modal centered open={isOpen} onCancel={handleCancel} maskClosable={false}>
+            <Modal data-test-id='buyConinsId' centered open={isOpen} onCancel={handleCancel} maskClosable={false}>
                 <header className={styles.modalHead}>
                     <div>
-                        <img src={img ? img : '/images/coinDefault.png'} alt={symbol} />
+                        <img src={symbol ? `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png` : '/images/coinDefault.png'} alt={symbol} />
                     </div>
                     <h3>{name} <span>{symbol}</span></h3>
                 </header>
                 <main className={styles.main}>
                     <p>Price: <span>{toDollar.format(+priceUsd)}</span></p>
                     <div>
-                        <Input type='text' value={value.trim()} onChange={handleChange} placeholder='Amount of coin' />
+                        <Input id='coinBuyingInput' type='text' value={value.trim()} onChange={handleChange} placeholder='Amount of coin' />
                     </div>
                     <p>Purchase price: <span>{toDollar.format(purchasePrice)}</span></p>
-                    {purchasePrice > 100000 && <span className={cn(styles.warningText, styles.error)}>Exceeded the maximum of $100,000</span>}
+                    {purchasePrice > 100000
+                        && <span id={purchasePrice > 100000 ? 'warningText' : undefined} className={cn(styles.warningText, styles.error)}>
+                            Exceeded the maximum of $100,000
+                        </span>}
                     {triger && <span className={cn(styles.warningText, styles.success)}>The purchase was successful</span>}
                 </main>
                 <footer className={styles.footer}>
-                    <Button className={styles.buyBtn} onClick={buyCoin}>Buy</Button>
+                    <Button id='buyCoin' className={styles.buyBtn} onClick={buyCoin}>Buy</Button>
                 </footer>
             </Modal>
         </>

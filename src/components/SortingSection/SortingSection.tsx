@@ -13,7 +13,6 @@ const SortingSection: React.FC<ISortingSection> = ({ setTableData, tableData }) 
     const { coinPrice, marketCap, percent } = sortingOptions;
     const [searchValue, setSearchValue] = useState<string>('');
     const [symbols, setSymbols] = useState<string[]>();
-    const [triger, setTriger] = useState<boolean>(false);
 
     const sortCoinsPrice = useCallback((keyWord: string, obgKey: keyof ICoin) => {
         setTimeout(() => {
@@ -43,15 +42,15 @@ const SortingSection: React.FC<ISortingSection> = ({ setTableData, tableData }) 
 
     useEffect(() => {
         sortCoinsPrice(sortedCoinPrice, 'priceUsd');
-    }, [sortedCoinPrice, triger]);
+    }, [sortedCoinPrice]);
 
     useEffect(() => {
         sortCoinsPrice(sortedMarketCap, 'marketCapUsd');
-    }, [sortedMarketCap, triger]);
+    }, [sortedMarketCap]);
 
     useEffect(() => {
         sortCoinsPrice(sortedPercent, 'changePercent24Hr');
-    }, [sortedPercent, triger]);
+    }, [sortedPercent]);
 
     useEffect(() => {
         if (searchValue.length === 0) {
@@ -97,7 +96,7 @@ const SortingSection: React.FC<ISortingSection> = ({ setTableData, tableData }) 
                 <div className={styles.imgBox}>
                     <img src="/images/loupe.png" alt="loupe" />
                 </div>
-                <Input placeholder='BTC' type='text' value={searchValue} onChange={searchCoin} />
+                <Input placeholder='BTC' id='searchInput' type='text' value={searchValue} onChange={searchCoin} />
             </section>
         </section>
     );

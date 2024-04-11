@@ -31,6 +31,5 @@ export const Default: Story = {
     args: {
         value: example,
         id: 2,
-        imgSrc: example.coinImg
     }
 };

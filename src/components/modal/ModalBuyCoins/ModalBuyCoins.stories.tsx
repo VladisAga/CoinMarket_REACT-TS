@@ -30,6 +30,5 @@ export const Default: Story = {
     args: {
         isOpen: true,
         coinInf: example,
-        img: example.coinImg
     }
 };

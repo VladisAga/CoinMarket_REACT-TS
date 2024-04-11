@@ -5,7 +5,7 @@ import { ICoin } from "../../types/types";
 import { formatNumber } from "../../functional/formatNumber";
 
 const CoinInWallet: React.FC<ICoinInWallet> = ({ coin, id: item, triger, setTriger }) => {
-    const { coinImg, id, symbol, coinAmount, priceUsd } = coin;
+    const {  symbol, coinAmount, priceUsd } = coin;
 
     const deleteCoin = () => {
         const wallet = localStorage.getItem('wallet');
@@ -22,13 +22,13 @@ const CoinInWallet: React.FC<ICoinInWallet> = ({ coin, id: item, triger, setTrig
             <div className={styles.imgAndName}>
                 <p className={styles.number}>{item + 1}.</p>
                 <div>
-                    <img src={coinImg ? coinImg : '/images/coinDefault.png'} alt={id} />
+                <img src={symbol ? `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png` : '/images/coinDefault.png'} alt={symbol} />
                 </div>
                 <p>{symbol}</p>
             </div>
             <p className={styles.coinAmount}>{coinAmount}</p>
             {coinAmount && <p className={styles.tolalPrice}>${formatNumber(+(+coinAmount * +priceUsd).toFixed(2))}</p>}
-            <Button onClick={deleteCoin} className={styles.delete}><img src="/images/trash.png" alt="trash" /></Button>
+            <Button id='deleteCoinBtn' onClick={deleteCoin} className={styles.delete}><img src="/images/trash.png" alt="trash" /></Button>
         </section>
     )
 }

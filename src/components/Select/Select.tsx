@@ -2,9 +2,9 @@ import { SortSelectProps } from "./select.props";
 
 const Select: React.FC<SortSelectProps> = ({ value, onChange, options, className }) => {
     return (
-        <select value={value} className={className} onChange={(e) => onChange(e.target.value)}>
+        <select id="sort-select" value={value} className={className} onChange={(e) => onChange(e.target.value)}>
             {options.map((option, index) => (
-                <option key={index} value={option.value} disabled={option.disabled}>
+                <option id={option.id} key={index} value={option.value} disabled={option.disabled}>
                     {option.label}
                 </option>
             ))}

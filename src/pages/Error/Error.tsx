@@ -10,7 +10,7 @@ const Error = () => {
     };
 
     return (
-        <section className={styles.section404}>
+        <section id='page404' className={styles.section404}>
             <div>
                 <h1>404</h1>
                 <p>There is no such page, I'll tell you. <Button onClick={goHome}>Go home</Button> and they will show you the right way there!</p>

@@ -27,7 +27,7 @@ const Loader: React.FC<TLoader> = ({ isLoading }) => {
   }, [isLoading]);
 
   return (
-    <div data-test-id='loader' className={styles.back} style={!isLoading ? { display: 'none' } : {}}>
+    <div id='loader' className={styles.back} style={!isLoading ? { display: 'none' } : {}}>
       <Lottie
         isClickToPauseDisabled
         style={{

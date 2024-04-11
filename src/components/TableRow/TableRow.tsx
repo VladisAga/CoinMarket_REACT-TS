@@ -8,7 +8,7 @@ import ModalBuyCoins from '../modal/ModalBuyCoins/ModalBuyCoins';
 import { toDollar } from '../../functional/moneyConvertor';
 import { formatNumber } from '../../functional/formatNumber';
 
-const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
+const TableRow: React.FC<ITableRow> = ({ value, id, tableData }) => {
     const rowRef = useRef<HTMLTableRowElement>(null);
     const [rowIndex, setRowIndex] = useState<number>(-1);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,6 @@ const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
     }, [marketCapUsd, priceUsd, tableData]);
 
     const goToCoinPage = () => {
-        localStorage.setItem('coinImg', imgSrc);
         navigate(`/coinPage/${encodeURIComponent(JSON.stringify(value))}`, { replace: true });
     };
 
@@ -38,20 +37,20 @@ const TableRow: React.FC<ITableRow> = ({ value, id, imgSrc, tableData }) => {
 
     return (
         <>
-            <tr ref={rowRef} className={styles.row} onClick={goToCoinPage}>
-                <td className={styles.firstTd}>{id + rowIndex}</td>
+            <tr id='coinRow' ref={rowRef} className={styles.row} onClick={goToCoinPage}>
+                <td id={symbol} className={styles.firstTd}>{id + rowIndex}</td>
                 <td className={styles.secondTd}>
-                    <img src={imgSrc ? imgSrc : '/images/coinDefault.png'} alt='coin' />
+                    <img src={symbol ? `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png` : '/images/coinDefault.png'} alt={symbol} />
                     {symbol}
                 </td>
-                <td className={styles.thirdTd}>{+priceUsd > 0.01 ? toDollar.format(+priceUsd) : '$' + parseFloat(priceUsd).toFixed(8)}</td>
+                <td id='sorted-element' className={styles.thirdTd}>{+priceUsd > 0.01 ? toDollar.format(+priceUsd) : '$' + parseFloat(priceUsd).toFixed(8)}</td>
                 <td className={styles.fourthTd}>${formatNumber(+marketCapUsd)}</td>
                 <td className={cn(styles.fifthTd, styles.plus, {
                     [styles.minus]: +changePercent24Hr < 0
                 })}>{Math.abs(+changePercent24Hr) > 0.01 ? Math.abs(+changePercent24Hr).toFixed(2) + '%' : Math.abs(+changePercent24Hr).toFixed(4) + '%'}</td>
-                <td className={styles.sixthTd}><Button className={styles.buyCoinBtn} onClick={showModal}>Buy coin</Button></td>
+                <td className={styles.sixthTd}><Button id='buyCoinBtn' className={styles.buyCoinBtn} onClick={showModal}>Buy coin</Button></td>
             </tr>
-            <ModalBuyCoins setIsOpen={setIsModalOpen} coinInf={value} img={imgSrc} isOpen={isModalOpen} />
+            <ModalBuyCoins setIsOpen={setIsModalOpen} coinInf={value} isOpen={isModalOpen} />
         </>
     )
 }
