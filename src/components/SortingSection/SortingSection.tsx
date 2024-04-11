@@ -94,7 +94,7 @@ const SortingSection: React.FC<ISortingSection> = ({ setTableData, tableData }) 
             />
             <section className={styles.inputSection}>
                 <div className={styles.imgBox}>
-                    <img src="/images/loupe.png" alt="loupe" />
+                    <img src="./images/loupe.png" alt="loupe" />
                 </div>
                 <Input placeholder='BTC' id='searchInput' type='text' value={searchValue} onChange={searchCoin} />
             </section>

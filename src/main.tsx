@@ -8,13 +8,15 @@ import CoinPage from './pages/CoinPage/CoinPage.tsx';
 import Layout from './Layout/HeaderAndMain/HeaderAndMain.tsx';
 import Error from './pages/Error/Error.tsx';
 
+const BASENAME = '/CoinMarket_REACT-TS/';
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
       {
-        path: '/',
+        index: true, 
         element: <MainPage />
       },
       {
@@ -27,12 +29,12 @@ const router = createBrowserRouter([
     path: '*',
     element: <Error />
   },
-
-]);
-
+], {
+  basename: BASENAME 
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <RouterProvider router={router} />
-  </Provider>,
-)
+  </Provider>
+);

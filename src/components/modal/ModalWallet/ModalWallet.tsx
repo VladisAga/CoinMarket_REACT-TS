@@ -22,7 +22,7 @@ const ModalWallet: React.FC<IModalWallet> = ({ isOpen, setIsOpen }) => {
 
     return (
         <>
-            <Modal open={isOpen} onCancel={handleCancel} maskClosable={false}>
+            <Modal open={isOpen} onCancel={handleCancel}>
                 {!coinInf.length
                     ? <p className={styles.modalTopic}>WALLET IS EMPTY</p>
                     : <section>

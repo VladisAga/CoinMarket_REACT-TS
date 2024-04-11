@@ -28,7 +28,7 @@ const CoinInWallet: React.FC<ICoinInWallet> = ({ coin, id: item, triger, setTrig
             </div>
             <p className={styles.coinAmount}>{coinAmount}</p>
             {coinAmount && <p className={styles.tolalPrice}>${formatNumber(+(+coinAmount * +priceUsd).toFixed(2))}</p>}
-            <Button id='deleteCoinBtn' onClick={deleteCoin} className={styles.delete}><img src="/images/trash.png" alt="trash" /></Button>
+            <Button id='deleteCoinBtn' onClick={deleteCoin} className={styles.delete}><img src="./images/trash.png" alt="trash" /></Button>
         </section>
     )
 }

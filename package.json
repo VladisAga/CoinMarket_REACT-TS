@@ -2,7 +2,7 @@
   "name": "coinmarket-test",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://VladisAga.github.io/CoinMarket_REACT-TS",
+  "homepage": "https://vladisaga.github.io/CoinMarket_REACT-TS",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "sb": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@playwright/test": "^1.43.0",

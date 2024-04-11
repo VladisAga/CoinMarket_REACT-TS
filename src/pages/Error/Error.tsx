@@ -6,7 +6,7 @@ const Error = () => {
     const navigate = useNavigate();
 
     const goHome = () => {
-        navigate('/', {replace: true});
+        navigate('/', { replace: true });
     };
 
     return (
