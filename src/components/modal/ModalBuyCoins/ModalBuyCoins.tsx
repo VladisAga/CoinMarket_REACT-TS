@@ -41,7 +41,7 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf })
     };
 
     const buyCoin = () => {
-        if (value && purchasePrice < 100000) {
+        if (value && purchasePrice < 100000 && purchasePrice > 1) {
             const wallet = localStorage.getItem('wallet');
             if (wallet) {
                 const walletInf = JSON.parse(wallet);
@@ -89,14 +89,18 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf })
                     <h3>{name} <span>{symbol}</span></h3>
                 </header>
                 <main className={styles.main}>
-                    <p>Price: <span>{toDollar.format(+priceUsd)}</span></p>
+                    <p>Price: <span> {+priceUsd > 0.01 ? toDollar.format(+priceUsd) : '$' + parseFloat(priceUsd).toFixed(8)}</span></p>
                     <div>
                         <Input id='coinBuyingInput' type='text' value={value.trim()} onChange={handleChange} placeholder='Amount of coin' />
                     </div>
-                    <p>Purchase price: <span>{toDollar.format(purchasePrice)}</span></p>
+                    <p>Purchase price: <span> {+priceUsd > 0.01 ? toDollar.format(purchasePrice) : '$' + purchasePrice.toFixed(8)}</span></p>
                     {purchasePrice > 100000
                         && <span id={purchasePrice > 100000 ? 'warningText' : undefined} className={cn(styles.warningText, styles.error)}>
                             Exceeded the maximum of $100,000
+                        </span>}
+                    {purchasePrice < 1 && !triger
+                        && <span className={cn(styles.warningText, styles.error)}>
+                            Purchase is possible from $1
                         </span>}
                     {triger && <span className={cn(styles.warningText, styles.success)}>The purchase was successful</span>}
                 </main>
