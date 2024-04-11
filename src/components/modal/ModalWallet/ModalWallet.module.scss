@@ -11,6 +11,7 @@
 .list {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     gap: 15px;
     padding-top: 10px;
     max-height: 600px;
@@ -30,9 +31,17 @@
 }
 
 .quantity {
-  padding-left: 20px;
+  padding-left: 50px;
+  box-sizing: border-box;
 }
 
 .totalCost {
-  padding-right: 70px;
+  padding-right: 50px;
+}
+
+@media all and (max-width: 524px) {
+  .list {
+      flex-direction: row;
+      justify-content: space-around;
+  }
 }

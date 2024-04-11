@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react';
 import { ICoin } from '../../../types/types';
 import CoinInWallet from '../../CoinInWallet/CoinInWallet';
 import styles from './ModalWallet.module.scss';
+import { useWindowWidth } from '../../../hooks/useWindowWidth';
 
 const ModalWallet: React.FC<IModalWallet> = ({ isOpen, setIsOpen }) => {
     const [coinInf, setCoinInf] = useState<ICoin[]>([]);
     const [triger, setTriger] = useState(false);
+    const windowWidth = useWindowWidth();
+
     const handleCancel = () => {
         setIsOpen(false);
     };
@@ -22,16 +25,16 @@ const ModalWallet: React.FC<IModalWallet> = ({ isOpen, setIsOpen }) => {
 
     return (
         <>
-            <Modal open={isOpen} onCancel={handleCancel} maskClosable={false}>
+            <Modal open={isOpen} onCancel={handleCancel}>
                 {!coinInf.length
                     ? <p className={styles.modalTopic}>WALLET IS EMPTY</p>
                     : <section>
                         <p className={styles.modalTopic}>Wallet</p>
-                        <div className={styles.walletTopics}>
+                        {!(windowWidth < 525) && <div className={styles.walletTopics}>
                             <p className={styles.name}>Name</p>
                             <p className={styles.quantity}>Quantity</p>
                             <p className={styles.totalCost}>Total cost</p>
-                        </div>
+                        </div>}
                         <ol className={styles.list}>
                             {coinInf.map((value, id) => (
                                 <li key={id} className={styles.listElem}>

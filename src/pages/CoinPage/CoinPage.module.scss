@@ -92,7 +92,6 @@
 }
 
 .Btn {
-
     padding: 8px 25px;
 }
 
@@ -141,20 +140,25 @@
 
     .imgAndName {
         justify-content: center;
-        flex-direction: column;
+
+        .logoBox {
+            flex: none;
+        }
     }
 
     .textInf {
         height: 20vh;
+        padding-top: 20px;
     }
 
     .graphic {
         width: 100%;
-        height: 73vh;
+        height: 80vh;
     }
 
-    .Btn {
-        margin: 0 0 0 35px;
+    .buyBtn {
+        display: inline-block;
+        margin-left: 20px;
     }
 
     .btnBox {
@@ -168,8 +172,20 @@
     }
 }
 
-@media all and (max-width: 670px) {
+@media all and (max-width: 720px) {
     .graphic {
-        height: 50vh;
+        height: 65vh;
+    }
+}
+
+@media all and (max-width: 475px) {
+    .graphic {
+        height: 31vh;
+    }
+}
+
+@media all and (max-width: 380px) {
+    .graphic {
+        height: 16vh;
     }
 }

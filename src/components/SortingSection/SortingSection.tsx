@@ -74,24 +74,26 @@ const SortingSection: React.FC<ISortingSection> = ({ setTableData, tableData }) 
 
     return (
         <section className={styles.sortingSection}>
-            <Select
-                value={sortedCoinPrice}
-                onChange={setSortedCoinPrice}
-                options={coinPrice}
-                className={styles.select}
-            />
-            <Select
-                value={sortedMarketCap}
-                onChange={setSortedMarketCap}
-                options={marketCap}
-                className={styles.select}
-            />
-            <Select
-                value={sortedPercent}
-                onChange={setSortedPercent}
-                options={percent}
-                className={styles.select}
-            />
+            <section className={styles.selectSection}>
+                <Select
+                    value={sortedCoinPrice}
+                    onChange={setSortedCoinPrice}
+                    options={coinPrice}
+                    className={styles.select}
+                />
+                <Select
+                    value={sortedMarketCap}
+                    onChange={setSortedMarketCap}
+                    options={marketCap}
+                    className={styles.select}
+                />
+                <Select
+                    value={sortedPercent}
+                    onChange={setSortedPercent}
+                    options={percent}
+                    className={styles.select}
+                />
+            </section>
             <section className={styles.inputSection}>
                 <div className={styles.imgBox}>
                     <img src="/images/loupe.png" alt="loupe" />

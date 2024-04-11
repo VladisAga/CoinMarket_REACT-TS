@@ -5,6 +5,8 @@
     background-color: rgb(255, 237, 220);
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .coins {
@@ -14,6 +16,7 @@
     p {
         font-weight: 500;
         font-size: 18px;
+        text-align: center;
     }
 }
 
@@ -38,4 +41,17 @@
 
 .walletPrice:hover {
     background-color: rgba(255, 141, 2, 0.2);
+}
+
+@media all and (max-width: 760px) {
+    .header {
+        justify-content: center;
+    }
+
+    .top3 {
+
+        h3 {
+            text-align: center;
+        }
+    }
 }

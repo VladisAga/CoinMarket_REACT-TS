@@ -5,7 +5,16 @@
     padding: 10px 0;
     justify-content: flex-end;
     align-items: center;
+    row-gap: 20px;
+    column-gap: 20px;
+    flex-wrap: wrap;
+}
+
+.selectSection {
+    display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .inputSection {
@@ -25,4 +34,24 @@
     background-color: rgb(251, 244, 237);
     color: rgb(66, 118, 231);
     font-weight: 600;
+}
+
+@media all and (max-width: 717px) {
+    .sortingSection {
+        row-gap: 10px;
+        justify-content: center;
+    }
+
+    .inputSection {
+        order: 1;
+    }
+
+    .selectSection {
+        order: 2;
+    }
+
+    .selectSection {
+        gap: 10px;
+        justify-content: center;
+    }
 }

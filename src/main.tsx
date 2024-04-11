@@ -7,24 +7,25 @@ import MainPage from './pages/MainPage/MainPage.tsx';
 import CoinPage from './pages/CoinPage/CoinPage.tsx';
 import Layout from './Layout/HeaderAndMain/HeaderAndMain.tsx';
 import Error from './pages/Error/Error.tsx';
+import { routes } from './routes/routes.ts';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: routes.DEFAULT_PATH,
     element: <Layout />,
     children: [
       {
-        path: '/',
+        path: routes.DEFAULT_PATH,
         element: <MainPage />
       },
       {
-        path: '/coinPage/:inf',
+        path: routes.COINPAGE_PATH,
         element: <CoinPage />
       }
     ]
   },
   {
-    path: '*',
+    path: routes.ERROR_PATH,
     element: <Error />
   },
 

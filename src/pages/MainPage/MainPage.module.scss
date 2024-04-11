@@ -50,3 +50,18 @@
 .sixthTh {
     width: 20%;
 }
+
+@media all and (max-width: 750px) {
+    .table {
+            border-top: 1px solid $separator-color;
+            padding-top: 5px;
+
+            tbody {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                row-gap: 15px;
+                column-gap: 5px;
+            }
+    }
+}

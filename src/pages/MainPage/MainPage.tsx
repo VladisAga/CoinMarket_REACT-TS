@@ -7,13 +7,15 @@ import Pagination from '../../components/Pagination/Pagination';
 import SortingSection from '../../components/SortingSection/SortingSection';
 import { useDispatch } from 'react-redux';
 import { setStateOfLoadTrue, setStateOfLoadFalse } from '../../redux/isLoadingSlice';
+import { useWindowWidth } from '../../hooks/useWindowWidth';
 
 const MainPage = () => {
-    const [getCoinData, {isLoading}] = useLazyGetCoinsQuery();
+    const [getCoinData, { isLoading }] = useLazyGetCoinsQuery();
     const [data, setData] = useState<ICoin[]>();
     const [paginationPage, setPaginationPage] = useState(1);
     const [limit, setLimit] = useState(100);
     const dispatch = useDispatch();
+    const windowWidth = useWindowWidth();
 
     const getCoin = () => {
         getCoinData(900).unwrap()
@@ -40,7 +42,7 @@ const MainPage = () => {
         <div className={styles.mainArea}>
             <SortingSection tableData={data!} setTableData={setData} />
             <table className={styles.table}>
-                <thead>
+                {!(windowWidth < 750) && <thead>
                     <tr>
                         <th className={styles.firstTh}>#</th>
                         <th className={styles.secondTh}>Name</th>
@@ -49,7 +51,7 @@ const MainPage = () => {
                         <th className={styles.fifthTh}>24h %</th>
                         <th className={styles.sixthTh}>PURCHASE</th>
                     </tr>
-                </thead>
+                </thead>}
                 <tbody>
                     {data && data.map((value: ICoin) => (
                         <TableRow

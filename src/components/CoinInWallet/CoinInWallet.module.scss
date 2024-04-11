@@ -3,7 +3,6 @@
     align-items: center;
     gap: 20px;
 
-
     p {
         font-size: 20px;
     }
@@ -13,13 +12,17 @@
     display: flex;
     align-items: center;
     width: 50%;
+    min-width: 155px;
 
     div {
         width: 30px;
         margin-right: 10px;
+        display: flex;
+        align-items: center;
 
         img {
             width: 100%;
+            display: inline-block;
         }
     }
 }
@@ -29,16 +32,15 @@
 }
 
 .coinAmount {
-    text-align: start;
+    text-align: center;
     width: 20%;
-    padding-left: 10px;
 }
 
-.tolalPrice {
+.totalPrice {
     width: 33%;
     text-align: start;
-    padding-left: 30px;
-    margin-right: -10px;
+    box-sizing: border-box;
+    padding-left: 40px;
 }
 
 .delete {
@@ -54,4 +56,47 @@
 
 ::-webkit-scrollbar {
     width: 0;
+}
+
+@media all and (max-width: 524px) {
+    .coin {
+        flex-direction: column;
+        background-color: rgb(255, 247, 240);
+        gap: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        max-width: 175px;
+    }
+
+    .imgAndName {
+        justify-content: center;
+        gap: 10px;
+
+        div {
+            margin-right: 0;
+        }
+    }
+
+    .coinAmount::before {
+        content: 'Amount: ';
+    }
+
+    .totalPrice {
+        display: flex;
+        align-items: center;
+    }
+
+    .totalPrice::before {
+        content: '\1F4B5';
+        padding-right: 2px;
+        display: inline-block;
+        margin-top: -5px;
+    }
+
+    .number,
+    .coinAmount,
+    .totalPrice {
+        width: auto;
+        padding: 0;
+    }
 }

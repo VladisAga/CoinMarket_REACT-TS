@@ -69,7 +69,6 @@ const CoinPage = () => {
     return (
         <>
             <section id="coinPage" className={styles.coinSection}>
-
                 {data && (
                     <>
                         <div className={styles.textInf}>

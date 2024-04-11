@@ -81,7 +81,7 @@ const ModalBuyCoins: React.FC<IModalBuyCoins> = ({ isOpen, setIsOpen, coinInf })
 
     return (
         <>
-            <Modal data-test-id='buyConinsId' centered open={isOpen} onCancel={handleCancel} maskClosable={false}>
+            <Modal data-test-id='buyConinsId' centered open={isOpen} onCancel={handleCancel} >
                 <header className={styles.modalHead}>
                     <div>
                         <img src={symbol ? `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png` : '/images/coinDefault.png'} alt={symbol} />
